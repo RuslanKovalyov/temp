@@ -18,15 +18,21 @@ os.makedirs(cache_dir, exist_ok=True)
 
 # Attempt to load the dataset with the specified configuration
 # ds = load_dataset("togethercomputer/RedPajama-Data-V2", config, cache_dir=cache_dir)
-ds = load_dataset(
-                "togethercomputer/RedPajama-Data-V2", 
-                partition="head_middle",
-                # partition="tail",
-                snapshots=["2023-14"], 
-                languages=["en"], 
-                name="default",
-                cache_dir=cache_dir
-            )
+
+while True:
+    try:
+        ds = load_dataset(
+                        "togethercomputer/RedPajama-Data-V2", 
+                        # partition="head_middle",
+                        partition="tail",
+                        snapshots=["2023-14"], 
+                        languages=["en"], 
+                        name="default",
+                        cache_dir=cache_dir
+                    )
+        break
+    except:
+        print(f"Dowloading dataset '{config}' configuration failed. Trying again...")
 
 input(f"Dataset '{config}' configuration loaded successfully. Press Enter to save it to -------------------------------------------------->>>>> {config_path}")
 
